@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/nfc_card_bg">
+
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/titleTv"
+        android:textColor="@color/color_FF1F2021"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="25dp"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        tools:text="Ready to Scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/imgRead"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/titleTv"
+        android:layout_width="145dp"
+        android:layout_height="145dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="18dp"
+        android:src="@drawable/gif_read" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/imgRead"
+        android:id="@+id/hintTv"
+        android:textColor="@color/color_FF616366"
+        android:layout_marginHorizontal="25dp"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        tools:text="Tap the first card as shown as above and hold until the end of the operation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/hintTv"
+        android:id="@+id/cancelBtn"
+        android:textAllCaps="false"
+        android:background="@drawable/black_btn"
+        android:text="@string/cancel"
+        android:textColor="@color/color_white"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

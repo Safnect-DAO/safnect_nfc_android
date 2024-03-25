@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NFC Safnect</string>
+    <string name="message_write_error">Error Writing Message !</string>
+
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NFC Safnect</string>
+    <string name="message_write_error">Error Writing Message !</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="ready_to_scan">Ready to Scan</string>
+    <string name="write_to_scan">Write to Scan</string>
+    <string name="ready_card_hint">Tap one wallet card as shown as above and hold until the end of the operation</string>
+    <string name="write_card_first_hint">Tap the first card as shown as above and hold until the end of the operation</string>
+    <string name="write_card_second_hint">Tap the second card as shown above and hold until the end of the operation. Please use a different card for this step</string>
+
+</resources>

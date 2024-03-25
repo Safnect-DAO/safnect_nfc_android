@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- Base application theme. -->
+
+
+    <style name="NFCBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:layoutDirection">ltr</item>
+    </style>
+
+</resources>

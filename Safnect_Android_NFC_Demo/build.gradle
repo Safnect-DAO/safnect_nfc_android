@@ -1,0 +1,38 @@
+buildscript {
+    ext.kotlin_version = "1.6.0"
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "http://lib.gcssloop.com:8081/repository/gcssloop-central/" }
+        maven{ url'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven { url 'https://chaquo.com/maven' } // Chaquo仓库
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.4'
+        classpath 'com.novoda:bintray-release:0.8.0'
+        classpath "com.chaquo.python:gradle:13.0.0" // 使用最新版本
+
+
+
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        google()
+        maven { url "https://jitpack.io" }
+        // 私有仓库地址
+        maven { url "http://lib.gcssloop.com:8081/repository/gcssloop-central/" }
+        maven{ url'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven { url 'https://chaquo.com/maven' } // Chaquo仓库
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

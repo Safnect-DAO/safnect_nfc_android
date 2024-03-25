@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.chaquo.python'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 34
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 34
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+        python {
+            // 指定python解释器路径 注意更换为自己电脑安装的Python路径
+            buildPython 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python312\\python.exe'
+        }
+        multiDexEnabled true
+    }
+    sourceSets {
+        main {
+            // 指定Python源代码目录
+            python.srcDirs = ['src/main/python']
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    kapt {
+        generateStubs = true
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.github.bhargavms:DotLoader:1.0.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.15'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+}
