@@ -11,14 +11,14 @@ import com.populstay.safnect.key.bean.KeyInfoBean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KeyUtil {
+public class KeyGenerator {
 
     // 私钥分片数量
     private static final int KEY_SHAR_COUNT = 3;
     // 恢复私钥所需最小分片数量
     public static final int THRESHOLD = 2;
 
-    public static final String TAG = "KeyUtil";
+    public static final String TAG = "KeyGenerator";
 
     private static final String KEY_PYTHON_FILE = "key";
 
@@ -70,12 +70,12 @@ public class KeyUtil {
             }
             Python python = Python.getInstance();
             Log.d(TAG,"restoreKey shares = " + shares);
-            List<String> keyShares = new ArrayList<>();
             List<Integer> keyShareIndexs = new ArrayList<>();
+            List<String> keyShares = new ArrayList<>();
             for (int i = 0; i < shares.size(); i++) {
-                String [] jjj =  shares.get(i).split(",");
-                keyShares.add(jjj[1]);
-                keyShareIndexs.add(Integer.valueOf(jjj[0]));
+                String [] keyShareArr =  shares.get(i).split(",");
+                keyShareIndexs.add(Integer.valueOf(keyShareArr[0]));
+                keyShares.add(keyShareArr[1]);
             }
 
 

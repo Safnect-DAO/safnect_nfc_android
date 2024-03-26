@@ -12,14 +12,17 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.populstay.safnect.key.EncryptionUtils;
 import com.populstay.safnect.key.R;
 import com.populstay.safnect.nfc.bean.PrivateKeyShareInfoBean;
 
@@ -34,6 +37,8 @@ public class NFCWriteActivity extends Activity {
     private TextView hintTv,titleTv;
     private Button cancelBtn;
 
+    private ImageView imgRead;
+
     PrivateKeyShareInfoBean mPrivateKeyShareInfoBean;
 
 
@@ -41,7 +46,7 @@ public class NFCWriteActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nfc_read_and_write_activity);
-        mPrivateKeyShareInfoBean = (PrivateKeyShareInfoBean) getIntent().getSerializableExtra(NFC.PARA_KEY_SHARE_INFO);
+        mPrivateKeyShareInfoBean = (PrivateKeyShareInfoBean) getIntent().getSerializableExtra(KeyStorageManager.PARA_KEY_SHARE_INFO);
         initWindowLocation();
         initViews();
         cancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +75,8 @@ public class NFCWriteActivity extends Activity {
         }else{
             hintTv.setText(R.string.write_card_second_hint);
         }
+        imgRead = findViewById(R.id.imgRead);
+        imgRead.setImageResource(R.mipmap.nfc_write_icon);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
     }
 
@@ -135,9 +142,11 @@ public class NFCWriteActivity extends Activity {
         if (tag != null) {
             if (isWrite) {
                 String messageToWrite = mPrivateKeyShareInfoBean.getCurKeySare();
-
                 if (messageToWrite != null && (!TextUtils.equals(messageToWrite, "null")) && (!TextUtils.isEmpty(messageToWrite))) {
-                    NdefRecord record = NdefRecord.createMime(messageToWrite, messageToWrite.getBytes());
+
+                    String keyShareEncrypt = EncryptionUtils.INSTANCE.encrypt(messageToWrite);
+                    Log.d(TAG,"writeToNFC keyShare = " + messageToWrite + "keyShareEncrypt = " + keyShareEncrypt);
+                    NdefRecord record = NdefRecord.createMime(keyShareEncrypt, keyShareEncrypt.getBytes());
                     NdefMessage message = new NdefMessage(new NdefRecord[]{record});
 
                     if (writeTag(tag, message)) {

@@ -8,9 +8,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.populstay.safnect.nfc.bean.PrivateKeyShareInfoBean
 import com.peerbits.nfccardread.databinding.ActivityCreateAccountBinding
-import com.populstay.safnect.key.KeyUtil
-import com.populstay.safnect.nfc.FileUtils
-import com.populstay.safnect.nfc.NFC
+import com.populstay.safnect.key.KeyGenerator
+import com.populstay.safnect.nfc.KeyStorageManager
 
 class CreateAccountActivity : AppCompatActivity() {
 
@@ -28,7 +27,7 @@ class CreateAccountActivity : AppCompatActivity() {
         binding.CreateAccountDemoBtn.setOnClickListener {
             privateKeyShareInfoList.clear()
             // 1、完成私钥分片：拿到私钥分片、公钥、完整私钥（是否需要上链联调决定）
-            val keyInfo = KeyUtil.sharesAndPublicKey(this)
+            val keyInfo = KeyGenerator.sharesAndPublicKey(this)
             Log.d(TAG,"完成私钥分片 keyInfo = $keyInfo")
             // 2、上链获取钱包地址(这里就模拟一下)
             Log.d(TAG,"完成上链 模拟......")
@@ -37,7 +36,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 shareList.forEachIndexed { index, keyShare ->
                     if (0 == index){
                         // 第一片存储到手机端本地
-                        FileUtils.writeToPrivateFile(this@CreateAccountActivity,"key.jks",keyShare)
+                        KeyStorageManager.writeMobileLocal(this@CreateAccountActivity,keyShare)
                         return@forEachIndexed
                     }
 
@@ -53,7 +52,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private fun dealNext() {
         if (privateKeyShareInfoList.isNotEmpty()){
-            startForResult.launch(NFC.writeNFC(this, privateKeyShareInfoList.removeAt(0)))
+            startForResult.launch(KeyStorageManager.writeNFC(this, privateKeyShareInfoList.removeAt(0)))
         }
     }
 

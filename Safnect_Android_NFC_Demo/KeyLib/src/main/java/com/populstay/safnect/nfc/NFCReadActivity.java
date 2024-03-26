@@ -22,9 +22,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.populstay.safnect.key.EncryptionUtils;
 import com.populstay.safnect.key.R;
 
 import java.io.IOException;
@@ -35,6 +37,8 @@ public class NFCReadActivity extends Activity {
     private TextView hintTv,titleTv;
     private NfcAdapter mNfcAdapter;
     private Button cancelBtn;
+
+    private ImageView imgRead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class NFCReadActivity extends Activity {
         hintTv.setText(R.string.ready_card_hint);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         cancelBtn = findViewById(R.id.cancelBtn);
+        imgRead = findViewById(R.id.imgRead);
+        imgRead.setImageResource(R.mipmap.nfc_read_icon);
     }
 
     @Override
@@ -184,12 +190,14 @@ public class NFCReadActivity extends Activity {
                         NdefRecord record = ndefMessages[0].getRecords()[0];
 
                         byte[] payload = record.getPayload();
-                        String text = new String(payload);
-                        hintTv.setText(text);
-                        Log.e("tag", "vahid  -->  " + text);
+                        String keyShare = new String(payload);
+                        Log.e("tag", "vahid  -->  " + keyShare);
                         ndef.close();
+
+                        String keyShareDecrypt = EncryptionUtils.INSTANCE.decrypt(keyShare);
+                        Log.d(TAG,"readFromNFC keyShare = " + keyShare + "keyShareDecrypt = " + keyShareDecrypt);
                         Intent resultIntent = new Intent();
-                        resultIntent.putExtra("keyShare", text);
+                        resultIntent.putExtra("keyShare", keyShareDecrypt);
                         setResult(Activity.RESULT_OK, resultIntent);
                         finish();
                     }
@@ -208,7 +216,6 @@ public class NFCReadActivity extends Activity {
                         if (ndefMessage != null) {
                             String message = new String(ndefMessage.getRecords()[0].getPayload());
                             Log.d(TAG, "NFC found.. " + "readFromNFC: " + message);
-                            hintTv.setText(message);
                             ndef.close();
                         } else {
                             Toast.makeText(this, "Not able to read from NFC, Please try again...", Toast.LENGTH_LONG).show();

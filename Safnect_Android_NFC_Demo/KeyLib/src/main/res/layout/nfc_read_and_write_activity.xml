@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/imgRead"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/titleTv"
@@ -28,7 +28,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="18dp"
-        android:src="@drawable/gif_read" />
+        android:src="@mipmap/nfc_write_icon" />
 
     <TextView
         android:layout_marginTop="20dp"
