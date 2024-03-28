@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 34
-
+    namespace 'com.peerbits.nfccardread'
     defaultConfig {
         applicationId "com.populstay.wallet.safnect.clientnfc"
         minSdkVersion 21
