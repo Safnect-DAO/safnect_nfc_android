@@ -27,7 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.populstay.safnect.key.EncryptionUtils;
+import com.populstay.safnect.key.KeyShareWrapper;
 import com.populstay.safnect.key.R;
+import com.populstay.safnect.nfc.bean.KeyStorageBean;
 
 import java.io.IOException;
 
@@ -194,7 +196,12 @@ public class NFCReadActivity extends Activity {
                         Log.e("tag", "vahid  -->  " + keyShare);
                         ndef.close();
 
-                        String keyShareDecrypt = EncryptionUtils.INSTANCE.decrypt(keyShare);
+                        KeyStorageBean keyStorageBean = KeyShareWrapper.INSTANCE.unPack(keyShare);
+                        if (null == keyStorageBean || !KeyStorageBean.APP_TAG.equalsIgnoreCase(keyStorageBean.getTag())){
+                            Toast.makeText(this, "This card is not supported. Please confirm if the card is correct", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        String keyShareDecrypt = keyStorageBean.getKeyShare();
                         Log.d(TAG,"readFromNFC keyShare = " + keyShare + "keyShareDecrypt = " + keyShareDecrypt);
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("keyShare", keyShareDecrypt);

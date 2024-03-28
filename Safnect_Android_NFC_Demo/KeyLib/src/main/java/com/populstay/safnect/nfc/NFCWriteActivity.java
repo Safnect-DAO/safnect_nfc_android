@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.populstay.safnect.key.EncryptionUtils;
+import com.populstay.safnect.key.KeyShareWrapper;
 import com.populstay.safnect.key.R;
 import com.populstay.safnect.nfc.bean.PrivateKeyShareInfoBean;
 
@@ -144,7 +144,9 @@ public class NFCWriteActivity extends Activity {
                 String messageToWrite = mPrivateKeyShareInfoBean.getCurKeySare();
                 if (messageToWrite != null && (!TextUtils.equals(messageToWrite, "null")) && (!TextUtils.isEmpty(messageToWrite))) {
 
-                    String keyShareEncrypt = EncryptionUtils.INSTANCE.encrypt(messageToWrite);
+                    // todo 需要先读取出来，确认是否已经写入该卡片
+                    //KeyStorageBean keyStorageBean = KeyShareWrapper.INSTANCE.pack(messageToWrite);
+                    String keyShareEncrypt = KeyShareWrapper.INSTANCE.pack(messageToWrite);
                     Log.d(TAG,"writeToNFC keyShare = " + messageToWrite + "keyShareEncrypt = " + keyShareEncrypt);
                     NdefRecord record = NdefRecord.createMime(keyShareEncrypt, keyShareEncrypt.getBytes());
                     NdefMessage message = new NdefMessage(new NdefRecord[]{record});

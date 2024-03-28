@@ -31,9 +31,11 @@ class TransactionSignActivity : AppCompatActivity() {
             // 手机本地的私钥分片
             val localKeyShare = KeyStorageManager.readMobileLocal(this)
             Log.d(TAG,"localKeyShare =  $localKeyShare")
-            keyShareList.add(localKeyShare)
-            // 卡片私钥匙分片
-            startForResult.launch(KeyStorageManager.readNFC(this))
+            localKeyShare?.let {
+                keyShareList.add(localKeyShare)
+                // 卡片私钥匙分片
+                startForResult.launch(KeyStorageManager.readNFC(this))
+            }
         }
 
     }

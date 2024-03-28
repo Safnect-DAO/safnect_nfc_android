@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.github.bhargavms:DotLoader:1.0.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.15'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.google.code.gson:gson:2.8.9'
 }

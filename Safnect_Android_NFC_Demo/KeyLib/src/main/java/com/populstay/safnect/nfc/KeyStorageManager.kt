@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.populstay.safnect.key.EncryptionUtils
+import com.populstay.safnect.key.KeyShareWrapper
 import com.populstay.safnect.nfc.bean.PrivateKeyShareInfoBean
 
 object KeyStorageManager {
@@ -21,15 +22,16 @@ object KeyStorageManager {
         return intent
     }
 
-    fun readMobileLocal(context: Context) :String{
+    fun readMobileLocal(context: Context) :String?{
         val localKeyShare = FileUtils.readFromPrivateFile(context,"key.jks")
-        val localKeyShareDecrypt = EncryptionUtils.decrypt(localKeyShare)
+        val keyStorageBean = KeyShareWrapper.unPack(localKeyShare)
+        val localKeyShareDecrypt = keyStorageBean?.keyShare
         Log.d(TAG,"readMobileLocal localKeyShare = $localKeyShare,localKeyShareDecrypt = $localKeyShareDecrypt")
         return localKeyShareDecrypt
     }
 
     fun writeMobileLocal(context: Context,keyShare : String){
-        val keyShareEncrypt = EncryptionUtils.encrypt(keyShare)
+        val keyShareEncrypt = KeyShareWrapper.pack(keyShare)
         Log.d(TAG,"readMobileLocal keyShare = $keyShare,keyShareEncrypt = $keyShareEncrypt")
         FileUtils.writeToPrivateFile(context,"key.jks",keyShareEncrypt)
     }
