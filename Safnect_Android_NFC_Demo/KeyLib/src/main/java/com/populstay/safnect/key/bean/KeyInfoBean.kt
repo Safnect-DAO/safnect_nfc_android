@@ -5,4 +5,8 @@ package com.populstay.safnect.key.bean
  * publicKeyList 公钥(x,y)
  * privateKey 完整私钥
  */
-class KeyInfoBean (val privateKeyShareList: List<String>? = null, val publicKeyList: List<String>? = null, val privateKey: String? = null)
+class KeyInfoBean (val privateKeyShareList: List<String>? = null, val publicKeyList: List<String>? = null, val privateKey: String? = null){
+    override fun toString(): String {
+        return "KeyInfoBean(privateKeyShareList=$privateKeyShareList, publicKeyList=$publicKeyList, privateKey=$privateKey)"
+    }
+}

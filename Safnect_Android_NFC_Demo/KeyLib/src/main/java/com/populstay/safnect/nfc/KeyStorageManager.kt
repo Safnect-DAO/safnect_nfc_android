@@ -6,18 +6,27 @@ import android.util.Log
 import com.populstay.safnect.key.EncryptionUtils
 import com.populstay.safnect.key.KeyShareWrapper
 import com.populstay.safnect.nfc.bean.PrivateKeyShareInfoBean
+import com.populstay.safnect.nfc.huada.HuadaNFCReadActivity
+import com.populstay.safnect.nfc.huada.HuadaNFCWriteActivity
 
 object KeyStorageManager {
 
     private const val TAG = "KeyStorageManager"
     const val PARA_KEY_SHARE_INFO = "keyShareInfo"
 
-    fun readNFC(context: Context) : Intent{
+    fun readNFC(context: Context,isUseHuada : Boolean = false) : Intent{
+        if (isUseHuada){
+            return Intent(context, HuadaNFCReadActivity::class.java)
+        }
         return Intent(context, NFCReadActivity::class.java)
     }
 
-    fun writeNFC(context: Context,keyShareInfo : PrivateKeyShareInfoBean) : Intent{
-        val intent = Intent(context, NFCWriteActivity::class.java)
+    fun writeNFC(context: Context,keyShareInfo : PrivateKeyShareInfoBean,isUseHuada : Boolean = false) : Intent{
+        val intent = if (isUseHuada){
+            Intent(context, HuadaNFCWriteActivity::class.java)
+        }else{
+            Intent(context, NFCWriteActivity::class.java)
+        }
         intent.putExtra(PARA_KEY_SHARE_INFO,keyShareInfo)
         return intent
     }

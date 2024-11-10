@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DkgAndSignDemoActivity">
+    tools:context=".DemoActivity">
 
     <Button
         android:text="创建账户demo(私钥分片)"
@@ -18,6 +18,46 @@
         app:layout_constraintTop_toBottomOf="@+id/CreateAccountDemoBtn"
         android:layout_marginTop="20dp"
         android:id="@+id/TransactionSignBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="恢复另外一个碎片"
+        app:layout_constraintTop_toBottomOf="@+id/TransactionSignBtn"
+        android:layout_marginTop="20dp"
+        android:id="@+id/restoreShareBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="华大卡片调试"
+        app:layout_constraintTop_toBottomOf="@+id/restoreShareBtn"
+        android:layout_marginTop="20dp"
+        android:id="@+id/readNfcABtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="SM4算法"
+        app:layout_constraintTop_toBottomOf="@+id/readNfcABtn"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnSM4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="华大卡片读写封装"
+        app:layout_constraintTop_toBottomOf="@+id/btnSM4"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnIsoDemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="华大卡片与分片算法整合demo"
+        app:layout_constraintTop_toBottomOf="@+id/btnIsoDemo"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnIsoDemo2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

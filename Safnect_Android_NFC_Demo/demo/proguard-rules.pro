@@ -15,3 +15,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#国四加密混淆
+-keep class org.bouncycastle.** { *; }

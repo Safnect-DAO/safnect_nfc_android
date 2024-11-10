@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.populstay.safnect.sm4.SM4Activity">
+
+    <EditText
+        android:id="@+id/contentEdit"
+        android:text="异常通常在解密数据时抛出，表明加密过程中的填充（padding）块已损坏。这可能是因为解密密钥错误、解密算法不匹配、数据在传输过程中被篡改或者是解密库与加密时使用的库之间存在不兼容。解决方法：确认加密和解密时使用的密钥完全相同。确认加密和解密过程中使用的填充模式（如PKCS5Padding、NoPadding等）完全一致。确保传输过程中数据未被篡改，可以通过校验和或者其他安全手段来保证数据的完整性。确保加密库和解密库版本兼容，或者使用相同的库。如果是分布式系统，确保所有节点时间同步，以防因时钟偏差导致的安全问题。如果问题依然存在，可能需要进一步检查加密和解密过程中的其他细节，或者使用网络抓包工具来检查数据传输的完整性和是否有被篡改的迹象。"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/enBtn"
+        android:text="加密"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="解密"
+        android:id="@+id/deBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/enBtn3des"
+        android:text="加密3des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="解密3des"
+        android:id="@+id/deBtn3des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -230,7 +230,25 @@ def restore_key(shares: list,points: list, threshold: int) -> int:
    # points = [(i + 1, share) for i, share in enumerate(shares)]
     return Polynomial.interpolate_evaluate(points, 0)
 
-def restore_share(points: list, threshold: int) -> int:
+def restore_share_and_public_key(points: list, threshold: int) -> tuple:
+    exist=[]
+    exist.append(points[0][0])
+    exist.append(points[1][0])
+    full_list=[1,2,3]
+    missing_number =list(set(full_list) - set(exist))[0]
+
+    sk=Polynomial.interpolate_evaluate(points, 0)
+
+    pk=scalar_multiply(sk,curve.g)
+    sk=None
+
+    return [missing_number,Polynomial.interpolate_evaluate(points, missing_number)],pk
+
+# 封装一下restore_share_and_public_key,对外提供restoreShareAndPublicKey
+def restoreShareAndPublicKey(shares: list, shareindexs: list,threshold: int) -> tuple:
+    return restore_share_and_public_key(random.sample(shares_to_points(shares,shareindexs), threshold),threshold)
+
+def restore_share(shares: list,points: list, threshold: int) -> int:
     if len(shares) < threshold:
         raise ValueError('The number of shares is less than the threshold')
    # points = [(i + 1, share) for i, share in enumerate(shares)]
@@ -240,7 +258,10 @@ def restore_share(points: list, threshold: int) -> int:
     full_list=[1,2,3]
     missing_number =list(set(full_list) - set(exist))[0]
     return [missing_number,Polynomial.interpolate_evaluate(points, missing_number)]
-    
+
+# 封装一下restore_share,对外提供restoreShare
+def restoreShare(shares: list, shareindexs: list,threshold: int) -> int:
+    return restore_share(shares,random.sample(shares_to_points(shares,shareindexs), threshold),threshold)
 
 # 封装一下restore_key,对外提供restore
 def restore(shares: list, shareindexs: list,threshold: int) -> int:

@@ -123,7 +123,7 @@ public class NFCWriteActivity extends Activity {
         IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
 
         PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
         if (mNfcAdapter != null)
             mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
     }
@@ -150,8 +150,7 @@ public class NFCWriteActivity extends Activity {
                     Log.d(TAG,"writeToNFC keyShare = " + messageToWrite + "keyShareEncrypt = " + keyShareEncrypt);
                     NdefRecord record = NdefRecord.createMime(keyShareEncrypt, keyShareEncrypt.getBytes());
                     NdefMessage message = new NdefMessage(new NdefRecord[]{record});
-
-                    if (writeTag(tag, message)) {
+                   if (writeTag(tag, message)) {
                         setResult(Activity.RESULT_OK);
                         finish();
                     } else {

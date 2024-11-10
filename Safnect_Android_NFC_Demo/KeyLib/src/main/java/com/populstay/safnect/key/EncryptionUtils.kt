@@ -3,6 +3,8 @@ package com.populstay.safnect.key
 
 
 import android.util.Base64
+import com.populstay.safnect.nfc.huada.HuaDaNfcController
+import org.bouncycastle.pqc.math.linearalgebra.ByteUtils
 import java.nio.charset.StandardCharsets
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -24,7 +26,8 @@ object EncryptionUtils {
         cipher.init(Cipher.ENCRYPT_MODE, key, iv)
 
         val encryptedBytes = cipher.doFinal(plainText.toByteArray(StandardCharsets.UTF_8))
-        return Base64.encodeToString(encryptedBytes, Base64.DEFAULT)
+        return ByteUtils.toHexString(encryptedBytes)
+        //return Base64.encodeToString(encryptedBytes, Base64.DEFAULT)
     }
 
     // 解密方法
@@ -35,7 +38,8 @@ object EncryptionUtils {
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         cipher.init(Cipher.DECRYPT_MODE, key, iv)
 
-        val decodedBytes = Base64.decode(encryptedText, Base64.DEFAULT)
+        //val decodedBytes = Base64.decode(encryptedText, Base64.DEFAULT)
+        val decodedBytes = ByteUtils.fromHexString(encryptedText)
         val decryptedBytes = cipher.doFinal(decodedBytes)
         return String(decryptedBytes, StandardCharsets.UTF_8)
     }

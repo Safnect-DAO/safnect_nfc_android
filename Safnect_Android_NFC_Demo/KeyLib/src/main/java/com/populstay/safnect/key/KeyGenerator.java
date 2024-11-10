@@ -88,4 +88,84 @@ public class KeyGenerator {
         }
         return null;
     }
+
+    public static String restoreShare(Context context,List<String> shares) throws Exception {
+        if (null == context){
+            throw new Exception("context must not null");
+        }
+        if (null == shares || shares.isEmpty()){
+            throw new Exception("shares must not null or empty");
+        }
+        if (shares.size() < THRESHOLD){
+            throw new Exception("The sharding required for private key recovery must be greater than " + THRESHOLD);
+        }
+        try {
+            if(!Python.isStarted()){
+                Python.start(new AndroidPlatform(context.getApplicationContext()));
+            }
+            Python python = Python.getInstance();
+            Log.d(TAG,"restoreShare shares = " + shares);
+            List<Integer> keyShareIndexs = new ArrayList<>();
+            List<String> keyShares = new ArrayList<>();
+            for (int i = 0; i < shares.size(); i++) {
+                String [] keyShareArr =  shares.get(i).split(",");
+                keyShareIndexs.add(Integer.valueOf(keyShareArr[0]));
+                keyShares.add(keyShareArr[1]);
+            }
+
+            PyObject pythonFunction2 = python.getModule(KEY_PYTHON_FILE).callAttr("restoreShare",keyShares.toArray(),keyShareIndexs.toArray(),THRESHOLD);
+            String restore_share = pythonFunction2.toString();
+            Log.d(TAG,"restore_share = " + restore_share);
+            return restore_share;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static KeyInfoBean restoreShareAndPublicKey(Context context,List<String> shares) throws Exception {
+        if (null == context){
+            throw new Exception("context must not null");
+        }
+        if (null == shares || shares.isEmpty()){
+            throw new Exception("shares must not null or empty");
+        }
+        if (shares.size() < THRESHOLD){
+            throw new Exception("The sharding required for private key recovery must be greater than " + THRESHOLD);
+        }
+        try {
+            if(!Python.isStarted()){
+                Python.start(new AndroidPlatform(context.getApplicationContext()));
+            }
+            Python python = Python.getInstance();
+            Log.d(TAG,"restoreShare shares = " + shares);
+            List<Integer> keyShareIndexs = new ArrayList<>();
+            List<String> keyShares = new ArrayList<>();
+            for (int i = 0; i < shares.size(); i++) {
+                String [] keyShareArr =  shares.get(i).split(",");
+                keyShareIndexs.add(Integer.valueOf(keyShareArr[0]));
+                keyShares.add(keyShareArr[1]);
+            }
+
+            PyObject pythonFunction2 = python.getModule(KEY_PYTHON_FILE).callAttr("restoreShareAndPublicKey",keyShares.toArray(),keyShareIndexs.toArray(),THRESHOLD);
+
+            // 从Python元组中提取返回值
+            List<PyObject> resultTuple = pythonFunction2.asList();
+            String restore_share = resultTuple.get(0).toString();
+            List<String> restoreShares = new ArrayList<>();
+            restoreShares.add(restore_share);
+
+            List<PyObject> publicKeyPyObjList = resultTuple.get(1).asList();
+            List<String> publicKeys = new ArrayList<>();
+            for (int i = 0; i < publicKeyPyObjList.size(); i++) {
+                publicKeys.add(publicKeyPyObjList.get(i).toString());
+            }
+
+            Log.d(TAG,"restoreShares = " + restoreShares + "\n publicKeys = " + publicKeys);
+            return new KeyInfoBean(restoreShares, publicKeys,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
