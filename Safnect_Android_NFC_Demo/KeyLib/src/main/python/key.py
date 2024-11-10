@@ -280,3 +280,18 @@ def shares_to_points(str_array: list,shareindexs: list) -> list:
 def inspect(items: list) -> str:
     return f'[{", ".join(str(item) for item in items)}]'
 
+
+def restore_share_and_public_key(points: list, threshold: int) -> int:
+    exist=[]
+    exist.append(points[0][0])
+    exist.append(points[1][0])
+    full_list=[1,2,3]
+    missing_number =list(set(full_list) - set(exist))[0]
+
+    sk=Polynomial.interpolate_evaluate(points, 0)
+
+    pk=scalar_multiply(sk,curve.g) 
+    sk=None
+
+    return [missing_number,Polynomial.interpolate_evaluate(points, missing_number)],pk
+
